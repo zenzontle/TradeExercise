@@ -1,0 +1,54 @@
+﻿<Window x:Class="Exercise.View.AddEditUserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviors="clr-namespace:Exercise.Behaviors"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="AddEditUserView" Height="200" Width="300" ResizeMode="NoResize"
+        DataContext="{Binding AddEditUser, Source={StaticResource Locator}}"
+        md:DialogServiceViews.IsRegistered="True">
+    <i:Interaction.Behaviors>
+        <behaviors:CloseWindowBehavior CloseTrigger="{Binding CloseTrigger}" />
+    </i:Interaction.Behaviors>
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="64" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Name" />
+            <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding User.Name}" />
+
+            <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="Email" />
+            <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding User.Email}" />
+
+            <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="Avatar" />
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                <Border BorderThickness="1" BorderBrush="#FF000000" Margin="1">
+                    <Image Width="64" Height="64" Source="{Binding User.Avatar}" />
+                </Border>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="3" Margin="5"
+                        Content="Select" Command="{Binding SelectAvatarCommand}" />
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="3" Margin="5"
+                        Content="Clear" Command="{Binding ClearAvatarCommand}" />
+            </StackPanel>
+
+            <Button Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Padding="3" Content="Save" Command="{Binding SaveCommand}" />
+            <Button Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Padding="3" Content="Cancel" Command="{Binding CancelCommand}" />
+        </Grid>
+    </xctk:BusyIndicator>
+</Window>

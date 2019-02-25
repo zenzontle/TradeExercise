@@ -1,0 +1,86 @@
+﻿<Window x:Class="Exercise.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="400" Width="600"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        md:DialogServiceViews.IsRegistered="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <command:EventToCommand Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Padding="3" Content="Refresh"
+                        Command="{Binding RefreshCommand}" />
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Padding="3" Content="Add User"
+                        Command="{Binding AddUserCommand}" />
+            </StackPanel>
+
+            <DataGrid Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                      SelectionMode="Single" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Width="auto" Binding="{Binding Id, Mode=OneWay}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Name" Width="auto" Binding="{Binding Name, Mode=OneWay}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Email" Width="auto" Binding="{Binding Email, Mode=OneWay}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Avatar" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Width="64" Height="64" Source="{Binding Avatar, Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Padding="3" VerticalAlignment="Center" Command="{Binding Path=DataContext.EditUserCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type DataGrid}}}">
+                                        <Image Width="16" Height="16"  Source="/Exercise;component/Resources/images/icons8-edit-100.png" />
+                                    </Button>
+                                    <Button Padding="3" VerticalAlignment="Center" Command="{Binding Path=DataContext.DeleteUserCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType={x:Type DataGrid}}}">
+                                        <Image Width="16" Height="16" Source="/Exercise;component/Resources/images/icons8-cancel-100.png" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </xctk:BusyIndicator>
+</Window>

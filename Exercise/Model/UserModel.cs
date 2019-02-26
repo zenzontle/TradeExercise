@@ -63,5 +63,10 @@ namespace Exercise.Model
                 AvatarId = AvatarId != 0 ? AvatarId : (int?)null
             };
         }
+
+        public UserModel ShallowCopy()
+        {
+            return (UserModel)MemberwiseClone();
+        }
     }
 }

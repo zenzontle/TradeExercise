@@ -110,7 +110,7 @@ namespace Exercise.ViewModel
                     new OpenWindowMessage<UserModel>
                     {
                         Type = WindowType.Modal,
-                        Parameter = SelectedUser
+                        Parameter = SelectedUser.ShallowCopy()
                     });
             }
         }

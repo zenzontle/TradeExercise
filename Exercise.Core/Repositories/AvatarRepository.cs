@@ -68,6 +68,7 @@ namespace Exercise.Core.Repositories
                     {
                         return null;
                     }
+                    avatar.Id = result.Id;
                     context.Entry(result).CurrentValues.SetValues(avatar);
                     context.Entry(result).State = EntityState.Modified;
                 }
